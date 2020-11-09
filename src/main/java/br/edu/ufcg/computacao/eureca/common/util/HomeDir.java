@@ -1,5 +1,7 @@
 package br.edu.ufcg.computacao.eureca.common.util;
 
+import br.edu.ufcg.computacao.eureca.common.exceptions.FatalErrorException;
+
 import java.io.File;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -13,7 +15,7 @@ public class HomeDir {
                     + File.separator + PRIVATE_DIRECTORY ;
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            return e.toString();
+            throw new FatalErrorException(e.getMessage());
         }
     }
 }
