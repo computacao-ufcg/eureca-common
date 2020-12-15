@@ -1,6 +1,7 @@
 package br.edu.ufcg.computacao.eureca.common.util;
 
 import br.edu.ufcg.computacao.eureca.common.constants.Messages;
+import br.edu.ufcg.computacao.eureca.common.exceptions.ConfigurationErrorException;
 import br.edu.ufcg.computacao.eureca.common.exceptions.InternalServerErrorException;
 import org.apache.log4j.Logger;
 
@@ -43,6 +44,14 @@ public class ServiceAsymmetricKeysHolder {
             }
         }
 	    return this.servicePublicKey;
+    }
+
+    public String getPublicKeyString() throws InternalServerErrorException, ConfigurationErrorException {
+        try {
+            return CryptoUtil.toBase64(getPublicKey());
+        } catch (GeneralSecurityException e) {
+            throw new ConfigurationErrorException(e.getMessage());
+        }
     }
 
     public RSAPrivateKey getPrivateKey() throws InternalServerErrorException {
