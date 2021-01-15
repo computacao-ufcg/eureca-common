@@ -7,7 +7,6 @@ import br.edu.ufcg.computacao.eureca.common.exceptions.InternalServerErrorExcept
 import br.edu.ufcg.computacao.eureca.common.exceptions.InvalidParameterException;
 import br.edu.ufcg.computacao.eureca.common.exceptions.UnavailableProviderException;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 
 import javax.annotation.Nullable;
@@ -18,6 +17,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 public class HttpRequestClient {
 
@@ -90,7 +90,8 @@ public class HttpRequestClient {
             connection.setDoOutput(true);
             try {
                 OutputStream outputStream = connection.getOutputStream();
-                outputStream.write(toByteArray(body));
+                byte[] jsonBytes = toByteArray(body);
+                outputStream.write(jsonBytes);
                 outputStream.flush();
                 outputStream.close();
             } catch (IOException e) {
@@ -101,7 +102,20 @@ public class HttpRequestClient {
 
     @VisibleForTesting
     static byte[] toByteArray(Map<String, String> body) {
-        String json = (new Gson()).toJson(body, Map.class);
+        String fields = "";
+        for (String key : body.keySet()) {
+            String value = body.get(key);
+            if (value.substring(0, 1).equals("{")) {
+                fields += String.format("\"%s\" : %s", key, value);
+            } else {
+                fields += String.format("\"%s\" : \"%s\"", key, value);
+            }
+            fields += ", ";
+        }
+        if (fields.length() > 0) {
+            fields = fields.substring(0, fields.length() - 2);
+        }
+        String json = String.format("{ %s }", fields);
         return json.getBytes();
     }
 
@@ -113,6 +127,7 @@ public class HttpRequestClient {
         HttpURLConnection connection = openConnection(url);
         setMethodIntoConnection(connection, method);
         addHeadersIntoConnection(connection, headers);
+        connection.setRequestProperty("Accept", "application/json");
         return connection;
     }
 

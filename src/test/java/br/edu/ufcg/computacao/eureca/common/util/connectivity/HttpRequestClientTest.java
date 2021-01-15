@@ -37,8 +37,8 @@ public class HttpRequestClientTest {
         // set up
         HttpMethod httpMethod = HttpMethod.GET;
         String invalidUrl = ANY_VALUE;
-        Map<String, String> headers = new HashMap<String, String>();
-        Map<String, String> body = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
+        Map<String, String> body = new HashMap<>();
 
         // exercise
         HttpRequestClient.doGenericRequest(httpMethod, invalidUrl, headers, body);
@@ -53,10 +53,10 @@ public class HttpRequestClientTest {
         HttpMethod httpMethod = HttpMethod.GET;
         String validUrl = DEFAULT_URL;
 
-        Map<String, String> body = new HashMap<String, String>();
+        Map<String, String> body = new HashMap<>();
         body.put(ANY_VALUE, ANY_VALUE);
 
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         headers.put(ANY_VALUE, ANY_VALUE);
 
         // exercise
@@ -70,8 +70,8 @@ public class HttpRequestClientTest {
         // set up
         HttpMethod method = HttpMethod.GET;
         String endpoint = DEFAULT_URL;
-        Map<String, String> headers = new HashMap<String, String>();
-        Map<String, String> body = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
+        Map<String, String> body = new HashMap<>();
 
         PowerMockito.mockStatic(HttpRequestClient.class);
         PowerMockito.doCallRealMethod().when(HttpRequestClient.class, "doGenericRequest",
@@ -232,7 +232,7 @@ public class HttpRequestClientTest {
     public void testSendRequestBodySuccessfully() throws Exception {
         // set up
         HttpURLConnection connection = Mockito.mock(HttpURLConnection.class);
-        Map<String, String> body = new HashMap<String, String>();
+        Map<String, String> body = new HashMap<>();
         body.put(ANY_VALUE, DEFAULT_URL);
         byte[] bytes = null;
 
