@@ -40,7 +40,7 @@ public class ServiceAsymmetricKeysHolder {
             try {
                 this.servicePublicKey = CryptoUtil.getPublicKey(this.publicKeyFilePath);
             } catch (IOException | GeneralSecurityException e) {
-                throw new InternalServerErrorException(Messages.INVALID_PUBLIC_KEY);
+                throw new InternalServerErrorException(String.format(Messages.INVALID_PUBLIC_KEY_S, this.publicKeyFilePath));
             }
         }
 	    return this.servicePublicKey;
@@ -60,7 +60,7 @@ public class ServiceAsymmetricKeysHolder {
             try {
                 this.servicePrivateKey = CryptoUtil.getPrivateKey(this.privateKeyFilePath);
             } catch (IOException | GeneralSecurityException e) {
-                throw new InternalServerErrorException(Messages.INVALID_PRIVATE_KEY);
+                throw new InternalServerErrorException(String.format(Messages.INVALID_PRIVATE_KEY_S, this.privateKeyFilePath));
             }
         }
         return this.servicePrivateKey;

@@ -8,8 +8,8 @@ public class Messages {
     public static final String EXPIRED_TOKEN = "Expired token.";
     public static final String FATAL_ERROR = "Fatal error.";
     public static final String INVALID_CHAR_C_FOR_RANDOM_KEY_S_AT_INDEX_D = "Invalid char \"%c\" for random key: \"%s\" at index %d.";
-    public static final String INVALID_PRIVATE_KEY = "Cannot read private key from configuration file.";
-    public static final String INVALID_PUBLIC_KEY = "Cannot read private key from configuration file.";
+    public static final String INVALID_PRIVATE_KEY_S = "Cannot read private key from configuration file: %s.";
+    public static final String INVALID_PUBLIC_KEY_S = "Cannot read public key from configuration file: %s.";
     public static final String INVALID_SERVICE_URL_S = "Invalid service URL: %s.";
     public static final String INVALID_TOKEN = "Invalid token.";
     public static final String NEITHER_BODY_OR_HEADERS_CAN_BE_NULL = "Neither body or headers can be null.";

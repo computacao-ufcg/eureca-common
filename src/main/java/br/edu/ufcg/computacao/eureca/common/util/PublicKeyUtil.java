@@ -37,13 +37,14 @@ public class PublicKeyUtil {
             Throwable e = new HttpResponseException(response.getHttpCode(), response.getContent());
             throw new UnavailableProviderException(e.getMessage());
         } else {
+            String publicKeyString = null;
             try {
                 Gson gson = new Gson();
                 Map<String, String> jsonResponse = gson.fromJson(response.getContent(), HashMap.class);
-                String publicKeyString = jsonResponse.get("publicKey");
+                publicKeyString = jsonResponse.get("publicKey");
                 publicKey = CryptoUtil.getPublicKeyFromString(publicKeyString);
             } catch (GeneralSecurityException e) {
-                throw new InternalServerErrorException(Messages.INVALID_PUBLIC_KEY);
+                throw new InternalServerErrorException(String.format(Messages.INVALID_PUBLIC_KEY_S, publicKeyString));
             }
             return publicKey;
         }
