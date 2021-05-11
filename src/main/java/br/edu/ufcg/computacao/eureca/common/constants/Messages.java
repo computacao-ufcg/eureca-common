@@ -4,6 +4,7 @@ public class Messages {
     public static final String AUTHENTICATION_ERROR = "Authentication error.";
     public static final String AUTHORIZATION_ERROR = "Authorization error.";
     public static final String CONFIGURATION_ERROR = "Error in the configuration files.";
+    public static final String ENCRYPTED_TOKEN_S_S = "Encrypted token (%s), key (%s).";
     public static final String ERROR_MESSAGE_IS_S = "Error message is: %s.";
     public static final String EXPIRED_TOKEN = "Expired token.";
     public static final String FATAL_ERROR = "Fatal error.";
