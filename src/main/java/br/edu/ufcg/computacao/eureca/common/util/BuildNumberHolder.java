@@ -11,14 +11,14 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class BuildNumberHolder {
-    private static final String BUILD_FILE = "build";
+    private static final String BUILD_FILE = "./build";
     private Logger LOGGER = Logger.getLogger(BuildNumberHolder.class);
 
     private Properties properties;
     private static BuildNumberHolder instance;
 
-    private BuildNumberHolder() throws FatalErrorException {
-        String filePath = HomeDir.getPath() + BUILD_FILE;
+    private BuildNumberHolder() {
+        String filePath = BUILD_FILE;
         this.properties = readBuildFile(filePath);
     }
 
@@ -36,7 +36,7 @@ public class BuildNumberHolder {
          return buildNumber;
     }
 
-    private Properties readBuildFile(String fileName) throws FatalErrorException {
+    private Properties readBuildFile(String fileName) {
         Properties prop = new Properties();
         FileInputStream fileInputStream = null;
 
@@ -44,7 +44,7 @@ public class BuildNumberHolder {
             fileInputStream = new FileInputStream(fileName);
             prop.load(fileInputStream);
         } catch (IOException e) {
-            throw new FatalErrorException(e.getMessage());
+            LOGGER.info(String.format(Messages.PROPERTY_FILE_S_NOT_FOUND, fileName));
         } finally {
             if (fileInputStream != null) {
                 try {
