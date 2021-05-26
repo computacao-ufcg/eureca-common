@@ -17,6 +17,8 @@ public class Messages {
     public static final String NO_PRIVATE_KEY_DEFINED = "Cannot find private key configuration file.";
     public static final String NO_PUBLIC_KEY_DEFINED = "Cannot find public key configuration file.";
     public static final String PROPERTY_FILE_S_NOT_FOUND = "Property file %s not found.";
+    public static final String RECEIVING_GET_PUBLIC_KEY_REQUEST = "Get public key received.";
+    public static final String RECEIVING_GET_VERSION = "Get version received.";
     public static final String UNABLE_TO_CLOSE_FILE_S = "Unable to close file %s.";
     public static final String UNAVAILABLE_PROVIDER = "Provider is not available.";
     public static final String UNEXPECTED = "Unexpected error.";
