@@ -8,7 +8,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class ExceptionToHttpErrorConditionTranslator extends ResponseEntityExceptionHandler {
+public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UnauthorizedRequestException.class)
     public final ResponseEntity<ExceptionResponse> handleAuthorizationException(Exception ex, WebRequest request) {
 
@@ -60,6 +60,6 @@ public class ExceptionToHttpErrorConditionTranslator extends ResponseEntityExcep
     public final ResponseEntity<ExceptionResponse> handleAnyException(Exception ex, WebRequest request) {
 
         ExceptionResponse errorDetails = new ExceptionResponse(ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
