@@ -8,49 +8,41 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class ExceptionToHttpErrorConditionTranslator extends ResponseEntityExceptionHandler {
+public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UnauthorizedRequestException.class)
     public final ResponseEntity<ExceptionResponse> handleAuthorizationException(Exception ex, WebRequest request) {
-
-        ExceptionResponse errorDetails = new ExceptionResponse(ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
+        return this.buildExceptionResponseEntity(ex, request, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(UnauthenticatedUserException.class)
     public final ResponseEntity<ExceptionResponse> handleAuthenticationException(Exception ex, WebRequest request) {
-
-        ExceptionResponse errorDetails = new ExceptionResponse(ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
+        return this.buildExceptionResponseEntity(ex, request, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(ConfigurationErrorException.class)
     public final ResponseEntity<ExceptionResponse> handleQuotaExceededException(Exception ex, WebRequest request) {
-
-        ExceptionResponse errorDetails = new ExceptionResponse(ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
+        return this.buildExceptionResponseEntity(ex, request, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler({UnavailableProviderException.class})
-    public final ResponseEntity<ExceptionResponse> handleUnavailableProviderException(
-            Exception ex, WebRequest request) {
-
-        ExceptionResponse errorDetails = new ExceptionResponse(ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.SERVICE_UNAVAILABLE);
+    public final ResponseEntity<ExceptionResponse> handleUnavailableProviderException(Exception ex, WebRequest request) {
+        return this.buildExceptionResponseEntity(ex, request, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler({InvalidParameterException.class})
-    public final ResponseEntity<ExceptionResponse> handleInvalidParameterException(
-            Exception ex, WebRequest request) {
-
-        ExceptionResponse errorDetails = new ExceptionResponse(ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    public final ResponseEntity<ExceptionResponse> handleInvalidParameterException(Exception ex, WebRequest request) {
+        return this.buildExceptionResponseEntity(ex, request, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InternalServerErrorException.class)
     public final ResponseEntity<ExceptionResponse> handleUnexpectedException(Exception ex, WebRequest request) {
 
-        ExceptionResponse errorDetails = new ExceptionResponse(ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+        return this.buildExceptionResponseEntity(ex, request, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundException(Exception ex, WebRequest request) {
+        return this.buildExceptionResponseEntity(ex, request, HttpStatus.NOT_FOUND);
     }
 
     /*
@@ -61,5 +53,14 @@ public class ExceptionToHttpErrorConditionTranslator extends ResponseEntityExcep
 
         ExceptionResponse errorDetails = new ExceptionResponse(ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    }
+
+    private ExceptionResponse buildErrorDetails(Exception ex, WebRequest request) {
+        return new ExceptionResponse(ex.getMessage(), request.getDescription(false));
+    }
+
+    private ResponseEntity<ExceptionResponse> buildExceptionResponseEntity(Exception ex, WebRequest request, HttpStatus httpStatus) {
+        ExceptionResponse errorDetails = this.buildErrorDetails(ex, request);
+        return new ResponseEntity<>(errorDetails, httpStatus);
     }
 }

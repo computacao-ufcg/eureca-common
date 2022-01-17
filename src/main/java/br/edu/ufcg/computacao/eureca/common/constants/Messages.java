@@ -22,4 +22,5 @@ public class Messages {
     public static final String UNABLE_TO_CLOSE_FILE_S = "Unable to close file %s.";
     public static final String UNAVAILABLE_PROVIDER = "Provider is not available.";
     public static final String UNEXPECTED = "Unexpected error.";
+    public static final String NOT_FOUND = "Entity not found.";
 }
